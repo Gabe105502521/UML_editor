@@ -12,7 +12,6 @@ import java.text.CollationKey;
 
 public class ToolBar extends JToolBar{
     private JPanel panel;
-    private Panel mainPanel;
     private Button selectBtn;
     private Button associationBtn;
     private Button generalizationBtn;

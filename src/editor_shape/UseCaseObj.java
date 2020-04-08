@@ -5,9 +5,7 @@ import java.awt.*;
 public class UseCaseObj extends Shape {
 
     public UseCaseObj(Point p) {
-        super(p);
-        this.width = 100;
-        this.height = 60;
+        super(p, 100, 60);
         this.objName = "Obj Name";
     }
 

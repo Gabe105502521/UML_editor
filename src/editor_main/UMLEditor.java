@@ -39,16 +39,16 @@ public class UMLEditor extends JFrame{
         this.setVisible(true);
 
         this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        this.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                int result=JOptionPane.showConfirmDialog((Component)e.getSource(),
-                        "Are you sure you want to exit?",
-                        "Confirm Exit",
-                        JOptionPane.YES_NO_OPTION,
-                        JOptionPane.WARNING_MESSAGE);
-                if (result==JOptionPane.YES_OPTION) {System.exit(0);}
-            }
-        });
+            this.addWindowListener(new WindowAdapter() {
+                public void windowClosing(WindowEvent e) {
+                    int result=JOptionPane.showConfirmDialog((Component)e.getSource(),
+                            "Are you sure you want to exit?",
+                            "Confirm Exit",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.WARNING_MESSAGE);
+                    if (result==JOptionPane.YES_OPTION) {System.exit(0);}
+                }
+            });
         listener = new DrawListener(panel);
         panel.addMouseListener(listener);
         panel.addMouseMotionListener(listener);
