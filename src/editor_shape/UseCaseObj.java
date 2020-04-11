@@ -1,17 +1,20 @@
 package editor_shape;
 
 import java.awt.*;
-
-public class UseCaseObj extends Shape {
+public class UseCaseObj extends BaseObj {
 
     public UseCaseObj(Point p) {
-        super(p, 100, 60);
+        this.p1 = p;
+        this.width = 100;
+        this.height = 60;
         this.objName = "Obj Name";
+        setPort();
     }
 
     @Override
     public void draw(Graphics2D g) {
-        g.drawOval(x1, y1, width, height);
-        g.drawString(objName, x1 + 25, y1+35);
+        g.drawOval(p1.x, p1.y, width, height);
+        g.drawString(objName, p1.x + 25, p1.y+35);
     }
+
 }

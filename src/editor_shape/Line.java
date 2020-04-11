@@ -4,20 +4,29 @@ import java.awt.*;
 
 public class Line extends Shape{
     protected Point startPoint, endPoint;
+    protected Port startPort, endPort;
+
     protected int width, height;
     int x3 = 0;
     int y3 = 0;
     int x4 = 0;
     int y4 = 0;
 
-    public Line(Point p1, Point p2) {
-        super(p1, p2);
-        startPoint = p1;
-        endPoint = p2;
+    public Line(Port startPort, Port endPort) {
+        this.startPort = startPort;
+        this.endPort = endPort;
+        this.startPoint = startPort.p1;
+        this.endPoint = endPort.p1;
+    }
+
+    @Override
+    public boolean inside(Point p) {
+        return false;
     }
 
     @Override
     public void draw(Graphics2D g) {
+        Point startPoint = startPort.p1, endPoint = endPort.p1;
         double awrad = Math.atan(width / height); // 箭頭角度
         double arrow_len = Math.sqrt(width * width + height * height); // 箭頭的長度
         double[] arrXY_1 = rotateVec(endPoint.x - startPoint.x, endPoint.y - startPoint.y, awrad, true, arrow_len);
@@ -59,36 +68,4 @@ public class Line extends Shape{
         return mathstr;
     }
 
-
-    public Point getStartPoint() {
-        return startPoint;
-    }
-
-    public void setStartPoint(Point startPoint) {
-        this.startPoint = startPoint;
-    }
-
-    public Point getEndPoint() {
-        return endPoint;
-    }
-
-    public void setEndPoint(Point endPoint) {
-        this.endPoint = endPoint;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
 }

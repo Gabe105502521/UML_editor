@@ -1,12 +1,10 @@
 package editor_shape;
 
 import java.awt.*;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.Line2D;
 
 public class AssociationLine extends Line {
-    public AssociationLine(Point p1, Point p2) {
-        super(p1, p2);
+    public AssociationLine(Port startPort, Port endPort) {
+        super(startPort, endPort);
         this.width = 10;
         this.height = 10;
     }
@@ -14,13 +12,7 @@ public class AssociationLine extends Line {
     @Override
     public void draw(Graphics2D g) {
         super.draw(g);
-/*        g.drawLine(x1, y1, x2, y2);
-        g.drawLine(x2, y2, x2-10, y2+10);
-        g.drawLine(x2, y2, x2-10, y2-10);
-        */
-
         //by https://blog.csdn.net/xidiangejun/article/details/5525241
-
         //箭頭  微調
         g.drawLine(endPoint.x, endPoint.y, x3, y3);
         g.drawLine(endPoint.x, endPoint.y, x4, y4);

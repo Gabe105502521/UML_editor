@@ -1,17 +1,13 @@
 package editor_main;
 
-import editor_mode.AssociationMode;
-import editor_mode.ClassMode;
-import editor_mode.SelectMode;
+import editor_mode.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.CollationKey;
 
-public class ToolBar extends JToolBar{
-    private JPanel panel;
+public class ToolBar extends JPanel{
     private Button selectBtn;
     private Button associationBtn;
     private Button generalizationBtn;
@@ -20,10 +16,8 @@ public class ToolBar extends JToolBar{
     private Button useCaseBtn;
     private Button[] buttonList;
     public ToolBar() {
-        panel = new JPanel();
 
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS)); //垂直排
-        this.setOrientation(SwingConstants.VERTICAL);
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); //垂直排
 
 
         selectBtn = new Button("select1.png");
@@ -48,11 +42,9 @@ public class ToolBar extends JToolBar{
         for(Button btn: buttonList) {
             btn.setBackground( new Color(0,0,255)); //背景顏色隨便，只起佔位作用
             btn.setOpaque(false);//設置背景透明
-            btn.setBorder(null);
-            panel.add(btn);
+            //btn.setBorder(null);
+            this.add(btn);
         }
-        this.add(panel);
-
     }
 
     //use inner class to listen buttons
@@ -61,7 +53,8 @@ public class ToolBar extends JToolBar{
             resetColor();
             selectBtn.setOpaque(true);
             selectBtn.setBackground(Color.LIGHT_GRAY);
-            UMLEditor.currentMode = 1;
+            UMLEditor.setCurrentMode(new SelectMode());
+            //UMLEditor.currentMode = 1;
         }
     }
 
@@ -70,7 +63,8 @@ public class ToolBar extends JToolBar{
             resetColor();
             associationBtn.setOpaque(true);
             associationBtn.setBackground(Color.LIGHT_GRAY);
-            UMLEditor.currentMode = 2;
+            UMLEditor.setCurrentMode(new AssociationMode());
+            //UMLEditor.currentMode = 2;
         }
     }
 
@@ -79,7 +73,8 @@ public class ToolBar extends JToolBar{
             resetColor();
             generalizationBtn.setOpaque(true);
             generalizationBtn.setBackground(Color.LIGHT_GRAY);
-            UMLEditor.currentMode = 3;
+            UMLEditor.setCurrentMode(new GeneralizationMode());
+            //UMLEditor.currentMode = 3;
         }
     }
 
@@ -88,7 +83,9 @@ public class ToolBar extends JToolBar{
             resetColor();
             compositionBtn.setOpaque(true);
             compositionBtn.setBackground(Color.LIGHT_GRAY);
-            UMLEditor.currentMode = 4;
+            UMLEditor.setCurrentMode(new CompositionMode());
+
+            //UMLEditor.currentMode = 4;
         }
     }
 
@@ -97,8 +94,8 @@ public class ToolBar extends JToolBar{
             resetColor();
             classBtn.setOpaque(true);
             classBtn.setBackground(Color.LIGHT_GRAY);
-            //UMLEditor.setCurrentMode(new ClassMode(mainPanel, mainPanel.getGraphics()));
-            UMLEditor.currentMode = 5;
+            UMLEditor.setCurrentMode(new ClassMode());
+            //UMLEditor.currentMode = 5;
         }
     }
 
@@ -107,7 +104,8 @@ public class ToolBar extends JToolBar{
             resetColor();
             useCaseBtn.setOpaque(true);
             useCaseBtn.setBackground(Color.LIGHT_GRAY);
-            UMLEditor.currentMode = 6;
+            UMLEditor.setCurrentMode(new UseCaseMode());
+            //UMLEditor.currentMode = 6;
         }
     }
 

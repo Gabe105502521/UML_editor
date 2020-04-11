@@ -1,26 +1,22 @@
 package editor_main;
 
 
-import editor_mode.BaseMode;
+import editor_mode.BaseObjMode;
 
 import javax.swing.*;
-import javax.tools.Tool;
 import java.awt.*;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.EventListener;
 
 public class UMLEditor extends JFrame{
-    private  Panel panel;
-    private DrawListener listener;
-    //public static BaseMode currentMode = null;
-    public static int currentMode = 0;
-    private ToolBar toolBar;
+    private static Panel panel;
+    public static BaseObjMode currentMode;
+    //public static int currentMode = 0;
+    private JPanel toolBar;
     private MenuBar menuBar;
 
     public UMLEditor() {
+        currentMode = new BaseObjMode();
         panel = new Panel();
         menuBar = new MenuBar();
         toolBar = new ToolBar();
@@ -49,14 +45,15 @@ public class UMLEditor extends JFrame{
                     if (result==JOptionPane.YES_OPTION) {System.exit(0);}
                 }
             });
-        listener = new DrawListener(panel);
-        panel.addMouseListener(listener);
-        panel.addMouseMotionListener(listener);
-        //getGraphics需在setVisible之後
-        listener.setG(panel.getGraphics());
     }
 
+    public static BaseObjMode getCurrentMode() {
+        return currentMode;
+    }
 
+    public static void setCurrentMode(BaseObjMode currentMode) {
+        UMLEditor.currentMode = currentMode;
+    }
 
     public static void main(String argv[]) {
         new UMLEditor().init();
