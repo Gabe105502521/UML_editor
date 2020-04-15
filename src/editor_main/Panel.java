@@ -11,11 +11,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
-public class Panel extends JPanel {
-    public static List<Shape> shapeList;
-    public Panel()  {
-        shapeList = new ArrayList<>();
+import java.util.Objects;
 
+public class Panel extends JPanel {
+    public static List<Shape> shapeList  = new ArrayList<>();
+    private MenuBar menuBar;
+    public Panel()  {
+        menuBar = MenuBar.getMenuBar();
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -38,6 +40,12 @@ public class Panel extends JPanel {
                 UMLEditor.getCurrentMode().mouseClicked(e);
                 repaint();
             }
+
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                menuBar.setNameItem(false);
+            }
+
         });
     }
 
@@ -46,18 +54,20 @@ public class Panel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
+        //will my group occur null element in list?
+        //shapeList.removeIf(Objects::isNull);
+
         for (Shape s: shapeList) {
-            s.draw((Graphics2D)g);
+//            System.out.println(s);
+            Graphics2D g2 = (Graphics2D)g;
+            g2.setStroke(new BasicStroke(2.0f));
+            s.draw(g2);
         }
     }
 
     public static List<Shape> getShapeList() {
         return shapeList;
     }
-
-    public static void setShapeList(List<Shape> shapeLisT) {
-        Panel.shapeList = shapeLisT;
-    }
-
 
 }

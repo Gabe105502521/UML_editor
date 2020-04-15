@@ -19,4 +19,9 @@ public class Port extends Shape{
     public void adjust(int difX, int difY) {
         this.p1.setLocation(p1.x + difX, p1.y + difY);
     }
+
+    @Override
+    public boolean inside(Point p) {
+        return false;
+    }
 }

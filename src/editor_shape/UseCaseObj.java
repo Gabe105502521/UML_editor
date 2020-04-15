@@ -7,6 +7,7 @@ public class UseCaseObj extends BaseObj {
         this.p1 = p;
         this.width = 100;
         this.height = 60;
+        this.xForAlign = 25;
         this.objName = "Obj Name";
         setPort();
     }
@@ -14,7 +15,9 @@ public class UseCaseObj extends BaseObj {
     @Override
     public void draw(Graphics2D g) {
         g.drawOval(p1.x, p1.y, width, height);
-        g.drawString(objName, p1.x + 25, p1.y+35);
+        //Font f1 = new Font(Font.BOLD);
+        //g.setFont(f1);
+        g.drawString(objName, p1.x + xForAlign, p1.y+35);
     }
 
 }

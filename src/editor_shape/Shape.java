@@ -16,7 +16,6 @@ public abstract class Shape {
         }
         return false;
     }
-
     public int getWidth() {
         return width;
     }
@@ -33,6 +32,10 @@ public abstract class Shape {
 
     public void setP1(Point p1) {
         this.p1 = p1;
+    }
+
+    public boolean inRectangle(Rectangle rec) {
+        return false;
     }
 }
 

@@ -15,8 +15,9 @@ public class ToolBar extends JPanel{
     private Button classBtn;
     private Button useCaseBtn;
     private Button[] buttonList;
+    private MenuBar menuBar;
     public ToolBar() {
-
+        menuBar = MenuBar.getMenuBar();
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); //垂直排
 
 
@@ -60,6 +61,7 @@ public class ToolBar extends JPanel{
 
     class associationBtnListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
+            setMenuUnable();
             resetColor();
             associationBtn.setOpaque(true);
             associationBtn.setBackground(Color.LIGHT_GRAY);
@@ -70,6 +72,7 @@ public class ToolBar extends JPanel{
 
     class generalizationBtnListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
+            setMenuUnable();
             resetColor();
             generalizationBtn.setOpaque(true);
             generalizationBtn.setBackground(Color.LIGHT_GRAY);
@@ -80,6 +83,7 @@ public class ToolBar extends JPanel{
 
     class compositionBtnListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
+            setMenuUnable();
             resetColor();
             compositionBtn.setOpaque(true);
             compositionBtn.setBackground(Color.LIGHT_GRAY);
@@ -91,6 +95,7 @@ public class ToolBar extends JPanel{
 
     class classBtnListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
+            setMenuUnable();
             resetColor();
             classBtn.setOpaque(true);
             classBtn.setBackground(Color.LIGHT_GRAY);
@@ -101,6 +106,7 @@ public class ToolBar extends JPanel{
 
     class useCaseBtnListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
+            setMenuUnable();
             resetColor();
             useCaseBtn.setOpaque(true);
             useCaseBtn.setBackground(Color.LIGHT_GRAY);
@@ -114,6 +120,12 @@ public class ToolBar extends JPanel{
             btn.setBackground( new Color(0,0,0));
             btn.setOpaque(false);
         }
+    }
+
+    void setMenuUnable() {
+        menuBar.setNameItem(false);
+        menuBar.setGroupItem(false);
+        menuBar.setUnGroupItem(false);
     }
 }
 

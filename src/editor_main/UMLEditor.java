@@ -16,9 +16,10 @@ public class UMLEditor extends JFrame{
     private MenuBar menuBar;
 
     public UMLEditor() {
-        currentMode = new BaseObjMode();
         panel = new Panel();
-        menuBar = new MenuBar();
+        menuBar = MenuBar.getMenuBar();
+        menuBar.setPanel(panel);
+        currentMode = new BaseObjMode();
         toolBar = new ToolBar();
 
         //取得內容面板再對其加入component

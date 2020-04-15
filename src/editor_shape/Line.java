@@ -25,6 +25,11 @@ public class Line extends Shape{
     }
 
     @Override
+    public boolean inRectangle(Rectangle rec) {
+        return false;
+    }
+
+    @Override
     public void draw(Graphics2D g) {
         Point startPoint = startPort.p1, endPoint = endPort.p1;
         double awrad = Math.atan(width / height); // 箭頭角度
