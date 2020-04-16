@@ -13,8 +13,6 @@ public class ClassObj extends BaseObj {
         setPort();
     }
 
-
-
     @Override
     public void draw(Graphics2D g) {
         p2 =  new Point(p1.x + width, p1.y);

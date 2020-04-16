@@ -19,9 +19,7 @@ public class ToolBar extends JPanel{
     public ToolBar() {
         menuBar = MenuBar.getMenuBar();
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); //垂直排
-
-
-        selectBtn = new Button("select1.png");
+        selectBtn = new Button("select.png");
         selectBtn.addActionListener(new selectBtnListener());
 
         associationBtn = new Button("association.png");
@@ -43,7 +41,7 @@ public class ToolBar extends JPanel{
         for(Button btn: buttonList) {
             btn.setBackground( new Color(0,0,255)); //背景顏色隨便，只起佔位作用
             btn.setOpaque(false);//設置背景透明
-            //btn.setBorder(null);
+            btn.setBorder(null);
             this.add(btn);
         }
     }

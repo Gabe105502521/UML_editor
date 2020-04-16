@@ -11,7 +11,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Panel extends JPanel {
     public static List<Shape> shapeList  = new ArrayList<>();

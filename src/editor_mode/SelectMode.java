@@ -17,7 +17,6 @@ import static editor_main.Panel.getShapeList;
 public class SelectMode extends BaseObjMode {
     private int tmp;
     private static List<BaseObj> shapesInRange = new ArrayList<>();
-    private static List<GroupObj> groupObjList = new ArrayList<>();
     private editor_main.MenuBar menuBar;
     private static BaseObj shapeSelected = null;
 
@@ -47,12 +46,18 @@ public class SelectMode extends BaseObjMode {
             if (tmp != -1) {  // has a shape
                 removeOldPort();
                 tmp = checkInShape(startPoint); // again after remove to avoid error by index of list
-                System.out.println(tmp + " " + Panel.getShapeList().size());
-                Panel.getShapeList().get(tmp).adjust(difX, difY);
+
+                //for depth
+                Shape tmpShape = Panel.getShapeList().get(tmp);
+                tmpShape.adjust(difX, difY);
+                Panel.getShapeList().remove(tmpShape);
+                Panel.getShapeList().add(0, tmpShape);
+
                 menuBar.setGroupItem(false);
             } else if (tmp == -1) {
                 selectShapes(difX, difY);
                 for (BaseObj obj : shapesInRange) {
+
                     for (int i = 0; i < obj.getPorts().size(); i++) {
                         getShapeList().add(obj.getPorts().get(i));
                     }
@@ -70,9 +75,13 @@ public class SelectMode extends BaseObjMode {
     public void mouseClicked(MouseEvent e) {
         tmp = checkInShape(startPoint);
         if (tmp != -1) {
-            System.out.println(tmp);
             BaseObj tmpShape = (BaseObj) getShapeList().get(tmp);
             removeOldPort();
+
+            // for depth, move to first place
+            Panel.getShapeList().remove(tmpShape);
+            Panel.getShapeList().add(0, tmpShape);
+
             for (int i = 0; i < tmpShape.getPorts().size(); i++) {
                 getShapeList().add(tmpShape.getPorts().get(i));
             }
@@ -124,9 +133,9 @@ public class SelectMode extends BaseObjMode {
     }
 
     public static void groupObj() {
-        for (int i = 0; i < Panel.getShapeList().size(); i++) {
+        /*for (int i = 0; i < Panel.getShapeList().size(); i++) {
             System.out.println(Panel.getShapeList().get(i));
-        }
+        }*/
 
         //Because shapesInRange is static, if it change, by groupobj's constructor, it will have same memory as shapeInRange,
         //and when I call shapesInRange.clear(), list in group will be clear
@@ -136,8 +145,8 @@ public class SelectMode extends BaseObjMode {
         //remove port(if it have)
         Iterator<BaseObj> iterator = tmp.iterator();
         while (iterator.hasNext()) {
-            BaseObj s = iterator.next();
-            if (s.getClass().equals(Port.class)) {
+            Shape s = iterator.next();
+            if (s instanceof Port) {
                 iterator.remove();
             }
         }

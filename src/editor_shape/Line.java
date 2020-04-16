@@ -1,6 +1,7 @@
 package editor_shape;
 
 import java.awt.*;
+import java.util.List;
 
 public class Line extends Shape{
     protected Point startPoint, endPoint;

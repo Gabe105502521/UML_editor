@@ -12,7 +12,6 @@ public class BaseObj extends Shape {
     public void draw(Graphics2D g) {
 
     }
-
     public Port findNearestPort(Point p) {
         int i;
         double dis = 100000000;

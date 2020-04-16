@@ -9,11 +9,11 @@ public class ClassMode extends BaseObjMode {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        Panel.getShapeList().add(new ClassObj(e.getPoint()));
+
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        Panel.getShapeList().add(0, new ClassObj(e.getPoint()));
     }
 }

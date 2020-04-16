@@ -14,6 +14,7 @@ public class UseCaseObj extends BaseObj {
 
     @Override
     public void draw(Graphics2D g) {
+        //g.setColor(Color.WHITE);
         g.drawOval(p1.x, p1.y, width, height);
         //Font f1 = new Font(Font.BOLD);
         //g.setFont(f1);

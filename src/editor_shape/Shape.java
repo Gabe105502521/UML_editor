@@ -34,6 +34,7 @@ public abstract class Shape {
         this.p1 = p1;
     }
 
+
     public boolean inRectangle(Rectangle rec) {
         return false;
     }
