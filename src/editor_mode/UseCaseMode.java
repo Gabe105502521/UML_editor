@@ -9,11 +9,10 @@ public class UseCaseMode extends BaseObjMode {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        Panel.getShapeList().add(new UseCaseObj(e.getPoint()));
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        Panel.getShapeList().add(0, new UseCaseObj(e.getPoint()));
     }
 }
