@@ -4,16 +4,24 @@ import editor_mode.BaseObjMode;
 import editor_mode.SelectMode;
 
 import javax.swing.*;
+
+import editor_shape.GroupObj;
+import editor_shape.Line;
 import editor_shape.Shape;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Panel extends JPanel {
     public static List<Shape> shapeList  = new ArrayList<>();
+    public static List<Line> lineList  = new ArrayList<>();
+    public static List<GroupObj> groupObjList  = new ArrayList<>();
+
     private MenuBar menuBar;
     public Panel()  {
         menuBar = MenuBar.getMenuBar();
@@ -57,16 +65,33 @@ public class Panel extends JPanel {
         //will my group occur null element in list?
         //shapeList.removeIf(Objects::isNull);
 
+        Graphics2D g2 = (Graphics2D)g;
+        g2.setStroke(new BasicStroke(2.0f));
+
+        Collections.sort(shapeList,new depthComparator());
+
+        //for (int i = shapeList.size() - 1; i >= 0; i--) {
         for (Shape s: shapeList) {
-//            System.out.println(s);
-            Graphics2D g2 = (Graphics2D)g;
-            g2.setStroke(new BasicStroke(2.0f));
             s.draw(g2);
+        }
+        for (Line l: lineList) {
+            l.draw(g2);
         }
     }
 
     public static List<Shape> getShapeList() {
         return shapeList;
     }
+    public static List<Line> getSLineList() {
+        return lineList;
+    }
+    public static List<GroupObj> getGroupObjList() {
+        return groupObjList;
+    }
 
+    class depthComparator implements Comparator<Shape> {
+        public int compare(Shape s1, Shape s2) {
+            return s2.getDepth() - s1.getDepth();  //倒序
+        }
+    }
 }

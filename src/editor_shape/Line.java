@@ -3,11 +3,13 @@ package editor_shape;
 import java.awt.*;
 import java.util.List;
 
-public class Line extends Shape{
+public class Line {
+    protected Point p1, p2;
     protected Point startPoint, endPoint;
     protected Port startPort, endPort;
-
     protected int width, height;
+    protected int depth = 0;
+
     int x3 = 0;
     int y3 = 0;
     int x4 = 0;
@@ -18,8 +20,9 @@ public class Line extends Shape{
         this.endPort = endPort;
         this.startPoint = startPort.p1;
         this.endPoint = endPort.p1;
+        this.depth = 0; //let it won't be covered
     }
-
+/*
     @Override
     public boolean inside(Point p) {
         return false;
@@ -28,9 +31,8 @@ public class Line extends Shape{
     @Override
     public boolean inRectangle(Rectangle rec) {
         return false;
-    }
+    }*/
 
-    @Override
     public void draw(Graphics2D g) {
         Point startPoint = startPort.p1, endPoint = endPort.p1;
         double awrad = Math.atan(width / height); // 箭頭角度

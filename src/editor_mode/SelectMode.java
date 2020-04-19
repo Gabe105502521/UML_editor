@@ -16,9 +16,9 @@ import static editor_main.Panel.getShapeList;
 
 public class SelectMode extends BaseObjMode {
     private int tmp;
-    private static List<BaseObj> shapesInRange = new ArrayList<>();
+    private static List<Shape> shapesInRange = new ArrayList<>();
     private editor_main.MenuBar menuBar;
-    private static BaseObj shapeSelected = null;
+    private static Shape shapeSelected = null;
 
     public SelectMode() {
         this.menuBar = MenuBar.getMenuBar();
@@ -43,23 +43,30 @@ public class SelectMode extends BaseObjMode {
             menuBar.setUnGroupItem(false);
 
             int difX = endPoint.x - startPoint.x, difY = endPoint.y - startPoint.y;
-            if (tmp != -1) {  // has a shape
+            if (tmp != -1) {  // startpoint has a shape
                 removeOldPort();
                 tmp = checkInShape(startPoint); // again after remove to avoid error by index of list
-
-                //for depth
                 Shape tmpShape = Panel.getShapeList().get(tmp);
-                tmpShape.adjust(difX, difY);
-                Panel.getShapeList().remove(tmpShape);
-                Panel.getShapeList().add(0, tmpShape);
 
+                boolean isInGroup = false;
+                for (GroupObj g:Panel.getGroupObjList()) {
+                    if (g.isContain(tmpShape)) {
+                        g.adjust(difX, difY);
+                        isInGroup = true;
+                        break;
+                    }
+                }
+                if (!isInGroup) {
+                    tmpShape.adjust(difX, difY);
+                    tmpShape.setDepth(99); //reset
+                    tmpShape.checkOverlap();
+                }
                 menuBar.setGroupItem(false);
             } else if (tmp == -1) {
                 selectShapes(difX, difY);
-                for (BaseObj obj : shapesInRange) {
-
-                    for (int i = 0; i < obj.getPorts().size(); i++) {
-                        getShapeList().add(obj.getPorts().get(i));
+                for (Shape s : shapesInRange) {
+                    for (int i = 0; i < s.getPorts().size(); i++) {
+                        getShapeList().add(s.getPorts().get(i));
                     }
                 }
             }
@@ -73,22 +80,29 @@ public class SelectMode extends BaseObjMode {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        boolean isInGroup = false;
         tmp = checkInShape(startPoint);
         if (tmp != -1) {
-            BaseObj tmpShape = (BaseObj) getShapeList().get(tmp);
+            Shape tmpShape = getShapeList().get(tmp);
             removeOldPort();
-
-            // for depth, move to first place
-            Panel.getShapeList().remove(tmpShape);
-            Panel.getShapeList().add(0, tmpShape);
-
-            for (int i = 0; i < tmpShape.getPorts().size(); i++) {
-                getShapeList().add(tmpShape.getPorts().get(i));
+            tmpShape.checkOverlap();
+            for (GroupObj g:Panel.getGroupObjList()) {
+                if (g.isContain(tmpShape)) {
+                    for (int i = 0; i < g.getPorts().size(); i++) {
+                        getShapeList().add(g.getPorts().get(i));
+                    }
+                    isInGroup = true;
+                    menuBar.setUnGroupItem(true);
+                    break;
+                }
             }
-            if (tmpShape instanceof GroupObj)
-                menuBar.setUnGroupItem(true);
+            if (!isInGroup) {
+                for (int i = 0; i < tmpShape.getPorts().size(); i++) {
+                    getShapeList().add(tmpShape.getPorts().get(i));
+                }
+            }
             shapeSelected = tmpShape;
-            if (shapeSelected instanceof GroupObj)
+            if (isInGroup)
                 menuBar.setUnGroupItem(true);
             else
                 menuBar.setNameItem(true);
@@ -117,7 +131,7 @@ public class SelectMode extends BaseObjMode {
         }
         for (Shape s : Panel.getShapeList()) {
             if (s.inRectangle(bounds) && !(s instanceof GroupObj)) {
-                shapesInRange.add((BaseObj) s);
+                shapesInRange.add(s);
             }
         }
     }
@@ -139,11 +153,18 @@ public class SelectMode extends BaseObjMode {
 
         //Because shapesInRange is static, if it change, by groupobj's constructor, it will have same memory as shapeInRange,
         //and when I call shapesInRange.clear(), list in group will be clear
-        List<BaseObj> tmp = new ArrayList<>();
+        List<Shape> tmp = new ArrayList<>();
         tmp.addAll(shapesInRange);
-
+        /*test
+        for (int i = 0; i < Panel.getShapeList().size(); i++){
+            for (int j = 0; j < tmp.size(); j++) {
+                if (tmp.get(j) == Panel.getShapeList().get(i)) {
+                    System.out.println("!!!!");
+                }
+            }
+        }*/
         //remove port(if it have)
-        Iterator<BaseObj> iterator = tmp.iterator();
+        Iterator<Shape> iterator = tmp.iterator();
         while (iterator.hasNext()) {
             Shape s = iterator.next();
             if (s instanceof Port) {
@@ -151,13 +172,17 @@ public class SelectMode extends BaseObjMode {
             }
         }
         //because my for always from 0 to end
-        Panel.getShapeList().add(0, new GroupObj(tmp));
+        Panel.getGroupObjList().add(0, new GroupObj(tmp));
     }
 
     public static void unGroupObj() {
-        if (shapeSelected instanceof GroupObj)
-            Panel.getShapeList().remove(shapeSelected);
+        GroupObj tmpG = null;
+        for (GroupObj g:  Panel.getGroupObjList()) {
+            if (g.isContain(shapeSelected)) {
+                tmpG = g;
+                break;
+            }
+        }
+        Panel.getGroupObjList().remove(tmpG);
     }
-
-
 }

@@ -1,14 +1,11 @@
 package editor_mode;
 
-import editor_main.MenuBar;
 import editor_main.Panel;
-import editor_shape.BaseObj;
 import editor_shape.Port;
 import editor_shape.Shape;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.util.ListIterator;
 
 public  class BaseObjMode {
     protected Port startPort, endPort;
@@ -27,11 +24,19 @@ public  class BaseObjMode {
     };
 
     public int checkInShape(Point p) {
-        for (int i = 0; i < Panel.getShapeList().size(); i++) {
+        //因為有照深度，要反著
+        for (int i = Panel.getShapeList().size() - 1; i >= 0 ; i--) {
             if (Panel.getShapeList().get(i).inside(p)) {
+                System.out.println(Panel.getShapeList().get(i).getDepth());
                 return i;
             }
         }
+        /*
+        for (int i = 0 ; i < Panel.getShapeList().size() ; i++) {
+            if (Panel.getShapeList().get(i).inside(p)) {
+                return i;
+            }
+        }*/
         return -1;
     }
 
@@ -43,7 +48,7 @@ public  class BaseObjMode {
         });*/
         for (int i = 0; i < Panel.getShapeList().size(); i++) {
             Shape tmp = Panel.getShapeList().get(i);
-            if (tmp.getClass().equals(Port.class)) {
+            if (tmp instanceof Port) {
                 Panel.getShapeList().remove(tmp);
                 i--; //手動維護，避免漏掉數據
             }

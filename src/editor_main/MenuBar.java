@@ -1,10 +1,8 @@
 package editor_main;
 
 import editor_mode.SelectMode;
-import editor_shape.BaseObj;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

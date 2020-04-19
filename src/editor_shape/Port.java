@@ -8,6 +8,7 @@ public class Port extends Shape{
         this.p1 = p;
         this.width = 10;
         this.height = 10;
+        this.depth = 0; // let it won't be covered
     }
 
     @Override

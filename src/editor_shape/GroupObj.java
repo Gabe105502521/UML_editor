@@ -6,10 +6,10 @@ import editor_main.UMLEditor;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-public class GroupObj extends BaseObj{
-    private List<BaseObj> shapesIngroup;
+public class GroupObj extends Shape{
+    private List<Shape> shapesIngroup;
 
-    public GroupObj(List<BaseObj> shapesIngroup) {
+    public GroupObj(List<Shape> shapesIngroup) {
         this.shapesIngroup = shapesIngroup;
         this.setWandH();
     }
@@ -49,7 +49,7 @@ public class GroupObj extends BaseObj{
     @Override
     public List<Port> getPorts() {
         List<Port> portsTmp = new ArrayList<>();
-        for (BaseObj obj: shapesIngroup) {
+        for (Shape obj: shapesIngroup) {
             for (Port p: obj.getPorts()) {
                 portsTmp.add(p);
             }
@@ -61,6 +61,8 @@ public class GroupObj extends BaseObj{
     public void adjust(int difX, int difY) {
         for (Shape s : shapesIngroup) {
             s.adjust(difX, difY);
+            s.depth = 99; //reset
+            s.checkOverlap();
         }
     }
 
@@ -82,4 +84,28 @@ public class GroupObj extends BaseObj{
         }
         return false;
     }
+
+    public boolean isContain(Shape s) {
+        if (shapesIngroup.contains(s))
+            return true;
+        else
+            return false;
+    }
+    @Override
+    public void checkOverlap() {
+        for (Shape s: shapesIngroup) {
+            s.checkOverlap();
+        }
+    }
+
+/*@Override
+    public void checkOverlap(Object o, int d) {
+        for (Shape s: shapesIngroup) {
+            if (((Rectangle)obj.ownShape).intersects((Rectangle)o)) {
+                if (d <= obj.depth) {
+                    obj.depth = --d;
+                }
+            }
+        }
+    }*/
 }

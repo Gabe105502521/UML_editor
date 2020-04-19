@@ -1,7 +1,6 @@
 package editor_mode;
 
 import editor_main.Panel;
-import editor_shape.BaseObj;
 import editor_shape.GeneralizationLine;
 import editor_shape.GroupObj;
 
@@ -18,10 +17,10 @@ public class GeneralizationMode extends BaseLineMode {
         endPoint = e.getPoint();
         int tmp = checkInShape(endPoint);
         if (tmp != -1 && startShape != null) {
-            endShape = (BaseObj) Panel.getShapeList().get(tmp);
+            endShape = Panel.getShapeList().get(tmp);
             if (startShape != endShape && !endShape.getClass().equals(GroupObj.class)) {
                 endPort = endShape.findNearestPort(endPoint);
-                Panel.getShapeList().add(new GeneralizationLine(startPort, endPort));
+                Panel.getSLineList().add(new GeneralizationLine(startPort, endPort));
             }
         } else  {
         }
