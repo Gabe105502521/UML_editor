@@ -3,7 +3,6 @@ package editor_mode;
 import editor_main.Panel;
 import editor_shape.ClassObj;
 import editor_shape.Shape;
-import editor_shape.UseCaseObj;
 
 import java.awt.event.MouseEvent;
 

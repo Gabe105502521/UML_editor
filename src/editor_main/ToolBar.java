@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ToolBar extends JPanel{
     private Button selectBtn;
@@ -14,102 +16,48 @@ public class ToolBar extends JPanel{
     private Button compositionBtn;
     private Button classBtn;
     private Button useCaseBtn;
-    private Button[] buttonList;
+    private String[] nameList;
+    private BaseObjMode[] modeList;
+    private List<Button> buttonList;
     private MenuBar menuBar;
     public ToolBar() {
         menuBar = MenuBar.getMenuBar();
+        buttonList = new ArrayList<>();
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); //垂直排
-        selectBtn = new Button("select.png");
-        selectBtn.addActionListener(new selectBtnListener());
 
-        associationBtn = new Button("association.png");
-        associationBtn.addActionListener(new associationBtnListener());
+        nameList = new String[]{"select.png", "association.png", "generalization.png", "composition.png", "class.png", "useCase.png"};
+        modeList = new BaseObjMode[]{new SelectMode(), new AssociationMode(), new GeneralizationMode(), new CompositionMode(), new ClassMode(), new UseCaseMode()};
 
-        generalizationBtn = new Button("generalization.png");
-        generalizationBtn.addActionListener(new generalizationBtnListener());
-
-        compositionBtn = new Button("composition.png");
-        compositionBtn.addActionListener(new compositionBtnListener());
-
-        classBtn = new Button("class.png");
-        classBtn.addActionListener(new classBtnListener());
-
-        useCaseBtn = new Button("useCase.png");
-        useCaseBtn.addActionListener(new useCaseBtnListener());
-
-        buttonList = new Button[]{selectBtn, associationBtn, generalizationBtn, compositionBtn, classBtn, useCaseBtn};
-        for(Button btn: buttonList) {
-            btn.setBackground( new Color(0,0,255)); //背景顏色隨便，只起佔位作用
-            btn.setOpaque(false);//設置背景透明
-            btn.setBorder(null);
-            this.add(btn);
+        for(int i = 0; i < 6; i++){
+            Button b = new Button(nameList[i], modeList[i]);
+            b.setBackground( new Color(0,0,255)); //背景顏色隨便，只起佔位作用
+            b.setOpaque(false);//設置背景透明
+            b.setBorder(null);
+            buttonList.add(b);
+            this.add(b);
         }
     }
-
-    //use inner class to listen buttons
-    class selectBtnListener implements ActionListener{
-        public void actionPerformed(ActionEvent e){
-            resetColor();
-            selectBtn.setOpaque(true);
-            selectBtn.setBackground(Color.LIGHT_GRAY);
-            UMLEditor.setCurrentMode(new SelectMode());
-            //UMLEditor.currentMode = 1;
+    private class Button extends JButton {
+        BaseObjMode mode;
+        public Button(String imgName, BaseObjMode mode) {
+            this.setIcon(new ImageIcon(getClass().getResource("../Image/" + imgName)));
+            //this.setContentAreaFilled(false);
+            this.setBorderPainted(false);
+            this.setPreferredSize(new Dimension(80, 80));
+            this.mode = mode;
+            this.addActionListener(new buttonListener());
         }
-    }
 
-    class associationBtnListener implements ActionListener{
-        public void actionPerformed(ActionEvent e){
-            setMenuUnable();
-            resetColor();
-            associationBtn.setOpaque(true);
-            associationBtn.setBackground(Color.LIGHT_GRAY);
-            UMLEditor.setCurrentMode(new AssociationMode());
-            //UMLEditor.currentMode = 2;
-        }
-    }
+        class buttonListener implements ActionListener {
 
-    class generalizationBtnListener implements ActionListener{
-        public void actionPerformed(ActionEvent e){
-            setMenuUnable();
-            resetColor();
-            generalizationBtn.setOpaque(true);
-            generalizationBtn.setBackground(Color.LIGHT_GRAY);
-            UMLEditor.setCurrentMode(new GeneralizationMode());
-            //UMLEditor.currentMode = 3;
-        }
-    }
-
-    class compositionBtnListener implements ActionListener{
-        public void actionPerformed(ActionEvent e){
-            setMenuUnable();
-            resetColor();
-            compositionBtn.setOpaque(true);
-            compositionBtn.setBackground(Color.LIGHT_GRAY);
-            UMLEditor.setCurrentMode(new CompositionMode());
-
-            //UMLEditor.currentMode = 4;
-        }
-    }
-
-    class classBtnListener implements ActionListener{
-        public void actionPerformed(ActionEvent e){
-            setMenuUnable();
-            resetColor();
-            classBtn.setOpaque(true);
-            classBtn.setBackground(Color.LIGHT_GRAY);
-            UMLEditor.setCurrentMode(new ClassMode());
-            //UMLEditor.currentMode = 5;
-        }
-    }
-
-    class useCaseBtnListener implements ActionListener{
-        public void actionPerformed(ActionEvent e){
-            setMenuUnable();
-            resetColor();
-            useCaseBtn.setOpaque(true);
-            useCaseBtn.setBackground(Color.LIGHT_GRAY);
-            UMLEditor.setCurrentMode(new UseCaseMode());
-            //UMLEditor.currentMode = 6;
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                resetColor();
+                ((JButton)e.getSource()).setOpaque(true);
+                ((JButton)e.getSource()).setBackground(Color.LIGHT_GRAY);
+                UMLEditor.setCurrentMode(mode);
+                setMenuUnable();
+            }
         }
     }
 
@@ -125,5 +73,6 @@ public class ToolBar extends JPanel{
         menuBar.setGroupItem(false);
         menuBar.setUnGroupItem(false);
     }
+
 }
 

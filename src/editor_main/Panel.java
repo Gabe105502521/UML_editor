@@ -18,9 +18,9 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Panel extends JPanel {
-    public static List<Shape> shapeList  = new ArrayList<>();
-    public static List<Line> lineList  = new ArrayList<>();
-    public static List<GroupObj> groupObjList  = new ArrayList<>();
+    private static List<Shape> shapeList  = new ArrayList<>();
+    private static List<Line> lineList  = new ArrayList<>();
+    private static List<GroupObj> groupObjList  = new ArrayList<>();
 
     private MenuBar menuBar;
     public Panel()  {
@@ -43,12 +43,6 @@ public class Panel extends JPanel {
             }
 
             @Override
-            public void mouseClicked(MouseEvent e) {
-                UMLEditor.getCurrentMode().mouseClicked(e);
-                repaint();
-            }
-
-            @Override
             public void mouseDragged(MouseEvent e) {
                 menuBar.setNameItem(false);
             }
@@ -62,15 +56,11 @@ public class Panel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        //will my group occur null element in list?
-        //shapeList.removeIf(Objects::isNull);
-
         Graphics2D g2 = (Graphics2D)g;
         g2.setStroke(new BasicStroke(2.0f));
 
         Collections.sort(shapeList,new depthComparator());
 
-        //for (int i = shapeList.size() - 1; i >= 0; i--) {
         for (Shape s: shapeList) {
             s.draw(g2);
         }

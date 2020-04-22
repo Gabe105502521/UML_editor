@@ -10,7 +10,7 @@ import java.awt.event.WindowEvent;
 
 public class UMLEditor extends JFrame{
     private static Panel panel;
-    public static BaseObjMode currentMode;
+    private static BaseObjMode currentMode;
     //public static int currentMode = 0;
     private JPanel toolBar;
     private MenuBar menuBar;
