@@ -21,16 +21,6 @@ public class Line {
         this.endPoint = endPort.p1;
         this.depth = 0; //let it won't be covered
     }
-/*
-    @Override
-    public boolean inside(Point p) {
-        return false;
-    }
-
-    @Override
-    public boolean inRectangle(Rectangle rec) {
-        return false;
-    }*/
 
     public void draw(Graphics2D g) {
         Point startPoint = startPort.p1, endPoint = endPort.p1;

@@ -1,6 +1,5 @@
 package editor_mode;
 
-import editor_main.Panel;
 import editor_shape.Shape;
 import editor_shape.UseCaseObj;
 
@@ -16,6 +15,6 @@ public class UseCaseMode extends BaseObjMode {
     public void mouseReleased(MouseEvent e) {
         Shape tmp = new UseCaseObj(e.getPoint());
         tmp.checkOverlap();
-        Panel.getShapeList().add(tmp);
+        canvas.getShapeList().add(tmp);
     }
 }

@@ -1,6 +1,6 @@
 package editor_shape;
 
-import editor_main.Panel;
+import editor_main.Canvas;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ public abstract class Shape {
     protected Point p1, p2;
     protected int width, height;
     protected int depth = 99;
-
+    protected boolean isSelected = false;
     protected String objName;
     protected List<Port> ports = new ArrayList<>();
     protected int xForAlign;
@@ -94,15 +94,15 @@ public abstract class Shape {
 
     //can be better
     public void checkOverlap() {
-        for (Shape s:Panel.getShapeList()){
-            if (!s.equals(this)) {
-                if (s.getOwnShape().intersects(this.getOwnShape())) {
-                    if (s.depth <= this.depth)
-                        this.depth = s.depth - 1;
-                    else
-                        this.depth--;
-                }
+        for (Shape s:Canvas.getInstance().getShapeList()){
+            //compare with other and check intersect
+            if (!s.equals(this) && s.isIntersected(this.getOwnShape())) {
+                if (s.depth <= this.depth)
+                    this.depth = s.depth - 1;
+                else
+                    this.depth--;
             }
+
         }
     }
 
@@ -117,5 +117,21 @@ public abstract class Shape {
     public void setDepth(int depth) {
         this.depth = depth;
     }
+
+    public void setSelected(boolean b) {
+        this.isSelected = b;
+    }
+
+    public boolean isIntersected(Rectangle r) {
+        if (this.getOwnShape().intersects(r)) {
+            return true;
+        }
+        return false;
+    }
+
+    public List<Shape> getShapesIngroup() {
+        return null;
+    }
+
 }
 

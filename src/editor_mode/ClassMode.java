@@ -1,6 +1,6 @@
 package editor_mode;
 
-import editor_main.Panel;
+import editor_main.Canvas;
 import editor_shape.ClassObj;
 import editor_shape.Shape;
 
@@ -17,6 +17,6 @@ public class ClassMode extends BaseObjMode {
     public void mouseReleased(MouseEvent e) {
         Shape tmp = new ClassObj(e.getPoint());
         tmp.checkOverlap();
-        Panel.getShapeList().add(tmp);
+        canvas.getShapeList().add(tmp);
     }
 }

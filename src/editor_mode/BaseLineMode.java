@@ -1,6 +1,5 @@
 package editor_mode;
 
-import editor_main.Panel;
 import editor_shape.*;
 import editor_shape.Shape;
 
@@ -16,12 +15,13 @@ public class BaseLineMode extends BaseObjMode {
     public void mousePressed(MouseEvent e) {
         startPoint = e.getPoint();
         int tmp = checkInShape(startPoint); //-1就是沒有，反之則是在哪個shape裡
-        if (tmp != -1) {
-            startShape = Panel.getShapeList().get(tmp);
-            if (isInGroup(startShape).getShapesIngroup() == null) { // in group
+        if (tmp != -1 ) {
+            startShape = canvas.getShapeList().get(tmp);
+            if (startShape.getShapesIngroup() == null) { //不是group
                 startPort = startShape.findNearestPort(startPoint);
+            } else {
+                startShape = null;
             }
-            else startShape = null;
         }
     }
 
@@ -32,8 +32,8 @@ public class BaseLineMode extends BaseObjMode {
     public boolean checkWhetherAdd(Point endPoint) {
         int tmp = checkInShape(endPoint);
         if (tmp != -1 && startShape != null) {
-            endShape = Panel.getShapeList().get(tmp);
-            if (isInGroup(endShape).getShapesIngroup() == null && !startShape.equals(endShape)) {
+            endShape = canvas.getShapeList().get(tmp);
+            if (endShape.getShapesIngroup() == null && !startShape.equals(endShape)) {
                 endPort = endShape.findNearestPort(endPoint);
                 return true;
             }

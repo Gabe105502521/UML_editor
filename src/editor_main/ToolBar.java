@@ -10,17 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ToolBar extends JPanel{
-    private Button selectBtn;
-    private Button associationBtn;
-    private Button generalizationBtn;
-    private Button compositionBtn;
-    private Button classBtn;
-    private Button useCaseBtn;
     private String[] nameList;
     private BaseObjMode[] modeList;
     private List<Button> buttonList;
     private MenuBar menuBar;
+    private Canvas canvas;
     public ToolBar() {
+        canvas = Canvas.getInstance();
         menuBar = MenuBar.getMenuBar();
         buttonList = new ArrayList<>();
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); //垂直排
@@ -55,7 +51,7 @@ public class ToolBar extends JPanel{
                 resetColor();
                 ((JButton)e.getSource()).setOpaque(true);
                 ((JButton)e.getSource()).setBackground(Color.LIGHT_GRAY);
-                UMLEditor.setCurrentMode(mode);
+                Canvas.getInstance().setCurrentMode(mode);
                 setMenuUnable();
             }
         }

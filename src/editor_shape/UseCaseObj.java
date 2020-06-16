@@ -22,6 +22,12 @@ public class UseCaseObj extends Shape {
         //Font f1 = new Font(Font.BOLD);
         //g.setFont(f1);
         g.drawString(objName, p1.x + xForAlign, p1.y+35);
+
+        if (this.isSelected) {
+            for (Port p : ports) {
+                p.draw(g);
+            }
+        }
     }
 
 }

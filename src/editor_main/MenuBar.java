@@ -1,14 +1,11 @@
 package editor_main;
 
-import editor_mode.SelectMode;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MenuBar extends JMenuBar {
     private static MenuBar menuBar = null;
-    private Panel panel;
     private JMenu fileMenu, editMenu;
     private JMenuItem groupItem, unGroupItem, nameItem;
     public MenuBar() {
@@ -33,10 +30,7 @@ public class MenuBar extends JMenuBar {
 
         this.add(fileMenu);
         this.add(editMenu);
-    }
 
-    public void setPanel(Panel panel) {
-        this.panel = panel;
     }
 
     public static MenuBar getMenuBar() {
@@ -48,18 +42,18 @@ public class MenuBar extends JMenuBar {
 
     class groupItemListener implements ActionListener {
         public void actionPerformed(ActionEvent e){
-            SelectMode.groupObj();
+            Canvas.getInstance().groupObj();
         }
     }
     class unGroupItemListener implements ActionListener {
         public void actionPerformed(ActionEvent e){
-            SelectMode.unGroupObj();
+            Canvas.getInstance().unGroupObj();
         }
     }
     class nameItemListener implements ActionListener {
         public void actionPerformed(ActionEvent e){
-            SelectMode.changeName();
-            panel.repaint();
+            Canvas.getInstance().changeName();
+            Canvas.getInstance().repaint();
         }
     }
 
